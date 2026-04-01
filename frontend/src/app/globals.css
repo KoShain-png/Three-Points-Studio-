@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-display: 'Playfair Display', serif;
+  --font-body: 'Lato', sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+  }
+
+  body {
+    font-family: var(--font-body);
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-charcoal-900 text-cream-50 px-6 py-3 font-body font-light tracking-widest text-sm uppercase transition-all duration-300 hover:bg-gold-500 hover:text-white;
+  }
+
+  .btn-outline {
+    @apply border border-charcoal-900 text-charcoal-900 px-6 py-3 font-body font-light tracking-widest text-sm uppercase transition-all duration-300 hover:bg-charcoal-900 hover:text-cream-50;
+  }
+
+  .btn-gold {
+    @apply bg-gold-500 text-white px-6 py-3 font-body font-light tracking-widest text-sm uppercase transition-all duration-300 hover:bg-gold-600;
+  }
+
+  .section-title {
+    @apply font-display text-3xl md:text-4xl text-charcoal-900 font-normal;
+  }
+
+  .card {
+    @apply bg-white border border-cream-200 transition-all duration-300;
+  }
+
+  .input-field {
+    @apply w-full border border-cream-200 bg-white px-4 py-3 text-charcoal-900 font-body font-light placeholder-charcoal-700/40 focus:outline-none focus:border-gold-500 transition-colors;
+  }
+
+  .label {
+    @apply block text-xs tracking-widest uppercase text-charcoal-700/70 mb-2 font-body;
+  }
+}
+
+/* Grain overlay */
+.grain::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.4;
+}
+
+/* Day picker custom styles */
+.rdp-button:hover:not([disabled]) {
+  background-color: #f2ead9 !important;
+}
+.rdp-day_selected .rdp-button {
+  background-color: #1a1916 !important;
+  color: #fdfcf8 !important;
+}

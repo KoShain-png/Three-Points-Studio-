@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(cuid())
+  name      String
+  email     String    @unique
+  password  String
+  phone     String?
+  role      String    @default("CLIENT") // CLIENT | ADMIN
+  bookings  Booking[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Service {
+  id          String    @id @default(cuid())
+  name        String
+  description String
+  duration    Int       // minutes
+  price       Float
+  imageUrl    String?
+  isActive    Boolean   @default(true)
+  bookings    Booking[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Booking {
+  id         String   @id @default(cuid())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+  service    Service  @relation(fields: [serviceId], references: [id])
+  serviceId  String
+  date       String   // YYYY-MM-DD
+  startTime  String   // HH:MM
+  endTime    String   // HH:MM
+  status     String   @default("PENDING") // PENDING | CONFIRMED | CANCELLED | COMPLETED
+  notes      String?
+  totalPrice Float
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model StudioHours {
+  id        String  @id @default(cuid())
+  dayOfWeek Int     // 0=Sun, 1=Mon, ..., 6=Sat
+  openTime  String  // "09:00"
+  closeTime String  // "18:00"
+  isOpen    Boolean @default(true)
+}
+
+model BlockedDate {
+  id     String  @id @default(cuid())
+  date   String  // YYYY-MM-DD
+  reason String?
+}
